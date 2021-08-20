@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		*{
+			margin: 0;
+			height: 0;
+			/*box-sizing: border-box;*/
+			user-select: none;
+			
+		}
+		.wrap{
+			width: 1270px;
+			height: 100vh;
+			margin: 0 auto;
+			/*background: #ccc;*/
+		}
+		
+		.box{
+			width: 90px;
+			height: 40px;
+			background:  lime;
+			border-radius: 2rem 2rem;
+			border:  1px solid green;
+			cursor: pointer;
+			position: relative;
+		}
+		.circle{
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			background-color: #ccc;
+			position:  absolute;
+			/*left: calc(100% - 40px);*/
+			left: 0;
+			transition: .3s;
+		}
+		input{
+			height: 30px;
+			margin-left: 100px;
+			/*display: none;*/
+		}
+		.toright{
+			left: calc(100% - 40px); 
+			/*40px в sccs поместить в переменню*/
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+
+<div class="wrap">
+	
+		<div class="box">
+			<div class="circle"></div>
+			<input type="checkbox" id="ch1">		
+		</div>
+		
+		<div class="box">
+			<div class="circle"></div>
+			<input type="checkbox" id="ch2">		
+		</div>
+		
+
+</div>
+
+<script>
+		let boxes = document.querySelectorAll('.box');
+		
+		for(i = 0; i < boxes.length; i++){
+			boxes[i].addEventListener('click',fCheck);
+		}
+
+		function fCheck(){
+			//console.log(this.children[0])
+			this.children[0].classList.toggle('toright');
+
+			if(this.children[0].classList.contains('toright')){				
+				this.children[1].checked = true;
+			}
+			else{				
+				this.children[1].checked = false;
+			}
+
+			fOut();
+			
+		}
+
+		// выведем сообщение
+
+		function fOut(){
+			console.log('ch1 нажат',ch1.checked)
+			console.log('ch2 нажат',ch2.checked)
+		}
+
+	</script>
+	
+	
+</body>
+</html>
