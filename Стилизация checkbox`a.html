@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		*{
+			margin: 0;
+			height: 0;
+			/*box-sizing: border-box;*/
+			user-select: none;
+			
+		}
+		.wrap{
+			width: 1270px;
+			height: 100vh;
+			margin: 0 auto;
+			/*background: #ccc;*/
+		}
+		
+		.box{
+			width: 90px;
+			height: 40px;
+			background:  lime;
+			border-radius: 2rem 2rem;
+			border:  1px solid green;
+			cursor: pointer;
+			position: relative;
+		}
+		.circle{
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			background-color: #ccc;
+			position:  absolute;
+			/*left: calc(100% - 40px);*/
+			left: 0;
+			transition: .3s;
+		}
+		#ch1, #ch2{
+			height: 30px;
+			margin-left: 100px;
+			/*display: none;*/
+		}
+		.toright{
+			left: calc(100% - 40px); 
+			/*40px в sccs поместить в переменню*/
+			background-color: red;
+		}
+		.delimeter{
+			width: 100%;
+			height: 100px;
+		}
+
+
+
+		.range{
+			width: 300px;
+			height: 100px;
+		}
+		.inp_range{
+			width: inherit;
+			height: 5px;
+		}
+		.wrap_line{
+			width: inherit;height: 100px;
+		}
+		.line{
+			width: inherit;
+			height: 10px;
+			background: green;
+			position: relative;
+			box-sizing: border-box;
+			left:  -10px;
+		}
+		.point{
+			width: 20px;
+			height: 20px;
+			background:  orange;
+			position: relative;
+			/*position: absolute;*/
+			top: calc(50% - 10px);
+			left:  0px;
+			box-sizing: border-box;
+		}
+		.show{
+			width: 30px;
+			height: 20px;
+			/*border:  1px solid black;*/
+			position: absolute;
+			top: -30px;
+			left: 0;
+		}
+
+	</style>
+</head>
+<body>
+
+<div class="wrap">
+
+	<!-- 1 checkboxes -->
+	
+		<div class="box">
+			<div class="circle"></div>
+			<input type="checkbox" id="ch1">		
+		</div>
+		
+		<div class="box">
+			<div class="circle"></div>
+			<input type="checkbox" id="ch2">		
+		</div>
+
+<div class="delimeter"></div>
+	<!-- 2 range -->
+
+	<div class="range">
+		<div class="wrap_line">
+			<div class="line">
+				<div class="point" id="point1"></div>
+				<div class="show"></div>
+			</div>
+		</div>
+		
+		<input type="range" min='0' max='300' value="0" class='inp_range'>
+	</div>
+		
+
+</div>
+
+<script>
+
+	// 1. checkboxes
+
+		let boxes = document.querySelectorAll('.box');
+		
+		for(i = 0; i < boxes.length; i++){
+			boxes[i].addEventListener('click',fCheck);
+		}
+
+		function fCheck(){
+			//console.log(this.children[0])
+			this.children[0].classList.toggle('toright');
+
+			if(this.children[0].classList.contains('toright')){				
+				this.children[1].checked = true;
+			}
+			else{				
+				this.children[1].checked = false;
+			}
+
+			fOut();
+			
+		}
+
+		// выведем сообщение
+
+		function fOut(){
+			console.log('ch1 нажат',ch1.checked)
+			console.log('ch2 нажат',ch2.checked)
+		}
+
+		// 2 range
+		let show = document.querySelector('.show');
+		let line = document.querySelector('.line');
+		let wrap_line = document.querySelector('.wrap_line')		
+		wrap_line.addEventListener('mousemove', () => drop(line.children[0]));
+		point1.addEventListener('mousedown', () => drop(line.children[0]));
+
+		
+
+		let inp_range = document.querySelector('.inp_range');
+		
+
+
+
+		function moveAt(cursorpositionX, elem){
+			elem.style.left = cursorpositionX - elem.offsetWidth/2 +'px';
+			// console.log(parseInt(elem.style.left,10) + elem.offsetWidth/2)	
+			show.innerHTML = parseInt(elem.style.left,10) + elem.offsetWidth/2;
+			show.style.left = parseInt(elem.style.left,10) + elem.offsetWidth/4  + 'px';
+			inp_range.value = parseInt(elem.style.left,10) + elem.offsetWidth/2;
+			
+		}
+
+
+		function drop(elem){			
+			cursorpositionX = event.clientX - line.offsetLeft;
+			//console.log(event.clientX)
+			if(cursorpositionX >= 0 && cursorpositionX <= 300){
+			moveAt(cursorpositionX, elem);
+		}
+		}
+
+	</script>
+	
+	
+</body>
+</html>
