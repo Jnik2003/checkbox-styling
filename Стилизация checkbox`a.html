@@ -64,7 +64,7 @@
 			height: 5px;
 		}
 		.wrap_line{
-			width: inherit;height: 100px;
+			width: inherit;height: 25px;
 		}
 		.line{
 			width: inherit;
@@ -72,7 +72,7 @@
 			background: green;
 			position: relative;
 			box-sizing: border-box;
-			left:  -10px;
+			left:  0px;
 		}
 		.point{
 			width: 20px;
@@ -165,27 +165,34 @@
 		// 2 range
 		let show = document.querySelector('.show');
 		let line = document.querySelector('.line');
-		let wrap_line = document.querySelector('.wrap_line')		
-		wrap_line.addEventListener('mousemove', () => drop(line.children[0]));
-		point1.addEventListener('mousedown', () => drop(line.children[0]));
+		let wrap_line = document.querySelector('.wrap_line');
+		let range = document.querySelector('.range');
+
+		point1.addEventListener('mousedown', activateMove);
+		point1.addEventListener('mouseup', deactivateMove);
+		range.addEventListener('mouseleave', deactivateMove);
+
 		point1.addEventListener('touchmove', () => drop(line.children[0]));
 		wrap_line.addEventListener('touchstart', () => drop(line.children[0], event.touches[0].clientX));
 
 		
 
-		let inp_range = document.querySelector('.inp_range');
-		
+		let inp_range = document.querySelector('.inp_range');	
 
-
-
-		function moveAt(cursorpositionX, elem){
-			elem.style.left = cursorpositionX - elem.offsetWidth/2 +'px';
-			// console.log(parseInt(elem.style.left,10) + elem.offsetWidth/2)	
-			show.innerHTML = parseInt(elem.style.left,10) + elem.offsetWidth/2;
-			show.style.left = parseInt(elem.style.left,10) + elem.offsetWidth/4  + 'px';
-			inp_range.value = parseInt(elem.style.left,10) + elem.offsetWidth/2;
+		function activateMove(){
+			// при таком вызове listener не удалить
+			//wrap_line.addEventListener('mousemove', () => drop(line.children[0]));
 			
+			wrap_line.addEventListener('mousemove', handler);
 		}
+		function deactivateMove(){			
+			wrap_line.removeEventListener('mousemove', handler);
+			//wrap_line.removeEventListener('mousemove', () => drop(line.children[0]));
+			
+		}	
+		handler = function h(){
+				drop(line.children[0]);
+			}
 
 
 		function drop(elem, x1 = 0){			
@@ -195,13 +202,17 @@
 			else{
 				cursorpositionX = event.clientX - line.offsetLeft;
 			}
-			
-			//console.log(event.clientX)
+
 			if(cursorpositionX >= 0 && cursorpositionX <= 300){
-			moveAt(cursorpositionX, elem);
-			
-			
+			moveAt(cursorpositionX, elem);			
 		}
+		}
+
+		function moveAt(cursorpositionX, elem){
+			elem.style.left = cursorpositionX - elem.offsetWidth/2 +'px';				
+			show.innerHTML = parseInt(elem.style.left,10) + elem.offsetWidth/2;
+			show.style.left = parseInt(elem.style.left,10) + elem.offsetWidth/4  + 'px';
+			inp_range.value = parseInt(elem.style.left,10) + elem.offsetWidth/2;			
 		}
 
 	</script>
