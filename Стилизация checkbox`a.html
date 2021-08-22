@@ -93,6 +93,11 @@
 			position: absolute;
 			top: -30px;
 			left: 0;
+			display: flex;
+			justify-content: center;
+			background: pink;
+			border-radius: 1rem 1rem;
+			padding: 2px;
 		}
 
 	</style>
@@ -120,7 +125,7 @@
 		<div class="wrap_line">
 			<div class="line">
 				<div class="point" id="point1"></div>
-				<div class="show"></div>
+				<div class="show">0</div>
 			</div>
 		</div>
 		
@@ -177,8 +182,10 @@
 
 		
 
-		let inp_range = document.querySelector('.inp_range');	
+		let inp_range = document.querySelector('.inp_range');
 
+
+// -----------------------------
 		function activateMove(){
 			// при таком вызове listener не удалить
 			//wrap_line.addEventListener('mousemove', () => drop(line.children[0]));
@@ -193,6 +200,7 @@
 		handler = function h(){
 				drop(line.children[0]);
 			}
+//----------------------------
 
 
 		function drop(elem, x1 = 0){			
