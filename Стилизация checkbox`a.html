@@ -13,7 +13,7 @@
 			
 		}
 		.wrap{
-			width: 1270px;
+			width: 400px;
 			height: 100vh;
 			margin: 0 auto;
 			/*background: #ccc;*/
@@ -83,6 +83,8 @@
 			top: calc(50% - 10px);
 			left:  0px;
 			box-sizing: border-box;
+			cursor: pointer;
+
 		}
 		.show{
 			width: 30px;
@@ -166,6 +168,8 @@
 		let wrap_line = document.querySelector('.wrap_line')		
 		wrap_line.addEventListener('mousemove', () => drop(line.children[0]));
 		point1.addEventListener('mousedown', () => drop(line.children[0]));
+		point1.addEventListener('touchmove', () => drop(line.children[0]));
+		wrap_line.addEventListener('touchstart', () => drop(line.children[0], event.touches[0].clientX));
 
 		
 
@@ -184,11 +188,19 @@
 		}
 
 
-		function drop(elem){			
-			cursorpositionX = event.clientX - line.offsetLeft;
+		function drop(elem, x1 = 0){			
+			if(event.touches){
+				cursorpositionX = event.touches[0].clientX - x1 - line.offsetLeft;
+			}
+			else{
+				cursorpositionX = event.clientX - line.offsetLeft;
+			}
+			
 			//console.log(event.clientX)
 			if(cursorpositionX >= 0 && cursorpositionX <= 300){
 			moveAt(cursorpositionX, elem);
+			
+			
 		}
 		}
 
