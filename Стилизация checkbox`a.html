@@ -100,6 +100,29 @@
 			padding: 2px;
 		}
 
+		/*radio*/
+		input[type="radio"]{
+			width: 20px;
+			height: 20px;
+			display: block;
+		}
+		.wrap_radio{
+			width: 300px;
+			height: 200px;
+		}
+		.radio_btn{
+			width: 50px;
+			height: 50px;
+			background-color: grey;
+			margin-top: 20px;
+			border-radius: 50%;
+			cursor: pointer;
+		}
+		.radio{
+			margin-top: 50px;
+		}
+
+
 	</style>
 </head>
 <body>
@@ -131,6 +154,27 @@
 		
 		<input type="range" min='0' max='300' value="0" class='inp_range'>
 	</div>
+
+	<!-- 3 radio -->
+	<div class="delimeter"></div>
+
+	<div class="wrap_radio">
+		<div>Kaunas</div>
+		<div class="radio_btn" data-radio="1" id='Kaunas'></div>
+
+		<div>St-Peterburg</div>
+		<div class="radio_btn" data-radio="2" id='St-Peterburg'></div>
+
+		<div>Pskov</div>
+		<div class="radio_btn" data-radio="3" id='Pskov'></div>
+	</div>
+	
+
+	<form class="radio">
+		<input type="radio" name="towns" value="Kaunas" checked>Kaunas
+		<input type="radio" name="towns" value="St-Peterburg">St-Peterburg
+		<input type="radio" name="towns" value="Pskov">Pskov
+	</form>
 		
 
 </div>
@@ -166,7 +210,7 @@
 			console.log('ch1 нажат',ch1.checked)
 			console.log('ch2 нажат',ch2.checked)
 		}
-
+//================================================
 		// 2 range
 		let show = document.querySelector('.show');
 		let line = document.querySelector('.line');
@@ -221,6 +265,23 @@
 			show.innerHTML = parseInt(elem.style.left,10) + elem.offsetWidth/2;
 			show.style.left = parseInt(elem.style.left,10) + elem.offsetWidth/4  + 'px';
 			inp_range.value = parseInt(elem.style.left,10) + elem.offsetWidth/2;			
+		}
+//============================================
+
+	// 3 radio ---
+
+		document.querySelectorAll('.radio_btn').forEach((item) => item.addEventListener('click', fSelect));
+		let rads = document.querySelectorAll('input[type="radio"]');
+
+
+		function fSelect(){			
+			document.querySelectorAll('.radio_btn').forEach((item) => item.style.background = 'grey');
+			this.style.background = 'red';			
+			for(i = 0; i < rads.length; i++){
+				if(rads[i].value == this.id){
+					rads[i].checked = true;
+				}
+			}
 		}
 
 	</script>
